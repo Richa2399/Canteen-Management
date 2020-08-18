@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="row" >
+		<div class="col-4" >
+
+<form method="post" style="padding-top: 15%;padding: 20%;" >
+	{% csrf_token %}
+  <I><h1 style="text-align: center;font-size: 7;"><B><FONT SIZE="7" FACE="nautilus_pompiliusregular">Login</FONT></B></h1></I><br>
+	<div class="form-group">
+    <label for="exampleInputEmail1">Phone Number</label>
+    <input type="number" name='phone' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone number">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" name='password' class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  
+  <a href="{% url 'password_reset' %}">Forgot Password....??</a><br>
+  <span style="color:red"><strong>{{message}}</strong></span>
+
+</form>
+
+</div></div>
+</div>
+
+{% endblock %}

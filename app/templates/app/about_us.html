@@ -1,0 +1,34 @@
+{% extends 'app\base.html' %}
+
+{% load static %}
+{% block content %}
+<div id="about" class="about-main pad-top-100 pad-bottom-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                   <br><br> <h2 class="block-title"> About Us </h2>
+                    <h3>IT STARTED, QUITE SIMPLY, LIKE THIS...</h3>
+                    <p> Hollaa...!! We are the students of SVMIT,Bharuch, Richa Kashyap (160450116015), Kirti Mishra (160450116016) and Khushbu Nirmal (160450116018). </p>
+
+                    <p>We choosed to develop this project because, once when we were in third year(2018-19), we worked for the entrepreneurship and installed food stalls in our canteen. We faced a lot of difficulties in taking orders and managing the payments and preparing orders in hurry...!! So from that day itself we thought to develop a system which aims automate all this process and to provide more facilities to the customers and the canteen staff. </p>
+
+                    <p>  </p>
+                </div>
+            </div>
+            <!-- end col -->
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                    <div class="about-images">
+                        <img class="about-main" src="{% static 'images/about-main.jpg' %}" alt="About Main Image">
+                        <img class="about-inset" src="{% static 'images/about-inset.jpg' %}" alt="About Inset Image">
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+{% endblock %}

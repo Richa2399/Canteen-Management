@@ -1,0 +1,54 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<div class="container" style="padding-top: 15%;">
+
+    <div class="row" >
+            <div class="col-md-3" >
+                <span style="font-size:x-large;color:crimson"><b> Food Name: <span style="color:darkgreen">{{ obj.food_name }}</b></span><br>
+                 <br> <img src="{{ obj.food_image.url }}" style="height: 280px; width: 280px;border-radius: 50%;">
+                  
+            </div>
+            <div class="col-md-9">
+              <table class="table table-hover">
+                <thead class="table-primary">
+                  <tr>
+                    <th scope="col" style="color:grey;font-size: 150%;">Ingredient Name</th>
+                    <th scope="col" style="color:grey;font-size: 150%;">Ingredient Quantity</th>
+                    <th scope="col" style="color:grey;font-size: 150%;">Brand</th>
+                    
+                  </tr>
+                </thead>
+        
+                {% for i in ingredients %}
+                <tr><td>{{i.ingredient_name}}</td> 
+                <td>{{i.ingredient_quantity}}</td> 
+        
+                <td>{{i.brand}}</td> 
+        
+                {% endfor %}
+            
+                 </table>   
+
+        </div>
+        
+</div><br><br>
+<a class="btn btn-primary" href="{% url 'menu' %}" role="button" style="align-items: center;"> Back    </a>
+</div>
+
+<br>
+
+</div>
+
+</body>
+
+</html>
+
+<!-- <form>
+<div class="card-text">
+    
+    Ingredients:{{ obj.description }}</div>
+</form> -->
+</div>
+
+{% endblock %}
+

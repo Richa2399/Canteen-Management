@@ -1,0 +1,330 @@
+{% extends 'app\base.html' %}
+{% load static %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+<style>
+.form-control-borderless {
+    border: none;
+}
+
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.checked {
+  color: orange;
+}
+.ui-datepicker td.ui-state-disabled>span{background:#c30;}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+<div class ="container" style="padding-top: 10%">
+	
+	<div class="row">
+
+		<div class="row">    
+			<div class="col-xs-8  ">
+				<div class="input-group">
+					<div class="input-group-btn search-panel">
+						
+						<div class="dropdown" >
+							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px">Select Canteen
+							<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li>
+								<a  tabindex="-1" href="{% url 'menu' %}">All</a>
+							</li>
+							{% for i in canteen %}
+							<li>
+							  <a class="test" tabindex="-1" href="#">{{ i.first_name }} <span class="caret"></span></a>
+							  <ul class="dropdown-menu">
+								{% for j in cat %}  
+								{% if j.canteen_name.first_name == i.first_name %}
+								
+								<li><a tabindex="-1" href="{% url 'fil_category' j.id i.id %}">{{j.category_name}}</a></li>
+								<!--
+								<li>
+								  <a class="test" href="#">Another dropdown <span class="caret"></span></a>
+								  <ul class="dropdown-menu">
+									<li><a href="#">3rd level dropdown</a></li>
+									<li><a href="#">3rd level dropdown</a></li>
+								  </ul>
+								</li>
+								-->
+								{% endif %}
+								
+								{% endfor %}
+							  </ul>
+							</li>
+							{% endfor %}
+						  </ul>
+					</div>
+
+					</div>
+					<form method="post" action="{% url 'home_search' %}">
+						{% csrf_token %}  
+						<div class="row">
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="search" placeholder="Search term..." style="height:30px;width:100%">
+							</div>
+							<div class="col-md-3">
+									
+						<button class="btn btn-default" type="submit" style="width:100px"><span class="glyphicon glyphicon-search"></span></button>
+								
+							</div>
+						</div>
+					
+					
+					
+				</form> 
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<!-- <h2>Multi-Level Dropdowns</h2>
+  <p>In this example, we use jQuery to open multi-level dropdowns on click (see script section below).</p>                              -->
+  
+		<br>
+	  
+	<div class="row" style="padding-top: 1%"> 
+		<div class="col-md-8 col-sm-10">
+			{% if menu == "No item found" %}
+			No item found
+			{% else %}
+		{% for i in menu %}		
+		<div class="col-md-4">
+
+	<div class="card">
+	  	<img src="{{ i.food_image.url }}" class="card-img-top" height="159px" width="150px">
+  	<div class="card-body">
+		  <div class="card-title"><h1>{{ i.food_name }} </h1> <p class="btn btn-danger">&#8377; {{ i.price }}  </p></div>
+			 
+		  {% if i.rating == 0 %} 
+		  <span class="fa fa-star "></span>
+							<span class="fa fa-star "></span>
+							<span class="fa fa-star "></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+			{% endif %}
+		 
+		  {% if i.rating == 1 %} 
+		  <span class="fa fa-star checked"></span>
+							<span class="fa fa-star "></span>
+							<span class="fa fa-star "></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+			{% endif %}
+
+			{% if i.rating == 2 %} 
+		  <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked "></span>
+							<span class="fa fa-star "></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+			{% endif %}
+
+			{% if i.rating == 3 %} 
+		  <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked "></span>
+							<span class="fa fa-star checked "></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+			{% endif %}
+
+			{% if i.rating == 4 %} 
+		  <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked "></span>
+							<span class="fa fa-star checked "></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star "></span>
+			{% endif %}
+
+			{% if i.rating == 5 %} 
+		  <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked "></span>
+							<span class="fa fa-star checked "></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+			{% endif %}
+		<!-- <div class="card-text">{{ i.description }}</div>  -->
+		<div class="card-text">{{ i.canteen.first_name }}</div>
+
+    	<a href="{% url 'add_cart' pk=i.pk %}" class="btn btn-primary">Add to cart</a>
+		<a href="{% url 'ingredients' pk=i.pk %}" class="btn btn-success">Details</a>
+		
+		
+		
+
+ 	</div>
+</div>
+<br>
+
+</div>
+{% endfor %}
+{% endif %}
+</div>
+
+<div class="col-md-4" style="border-style:solid;border-color: #e75b1e;">
+
+	<div class="shopping-cart">
+		<!-- Title -->
+		<div class="title" style="font: size 30px;border-color: #e75b1e;text-align: center;border-width: 1rem;">
+			{% if items == 0 %}
+			<b> Oops...!! 
+				 Cart Empty</b>
+				
+			</div>
+		</div>
+			{% else %}
+		  	<b>MY ORDER</b>
+			</div>
+				{% for i in cart %}
+					<div class="row">
+
+						<div class ="col-md-1">
+							<div class="buttons">
+								<a href="{% url 'del' pk=i.pk %}"><span class="delete-btn"><span></a>
+				  			</div>
+		  
+						</div>
+						<div class ="col-md-3">
+							<div class="description">
+								{{ i.food.food_name }}
+							</div>
+				
+						</div>
+						<div class ="col-md-6">
+							<div class="quantity">
+					
+								<button class="plus-btn" type="button" name="button" id="s{{i.id}}">
+								<a href="{% url 'plus' pk=i.pk %}">	
+									<img src="{% static 'images/plus.svg' %}" alt="" /></a>
+								</button>
+								<input type="text" name="name" value="{{i.quantity}}" class="qty" >
+								<button class="minus-btn" type="button" name="button" id="s{{i.id}}">
+								<a href="{% url 'minus' pk=i.pk %}">
+					  				<img src="{% static 'images/minus.svg' %}" alt="" />
+								</a>
+								</button>
+				  			</div>
+			
+				
+						</div>
+						<div class ="col-md-2" style="margin-left: 0px;padding-left:0px">
+				
+							<div class="total-price" id="total">&#8377;{{ i.price }}</div>
+							
+							
+							
+				
+				
+						</div>
+					</div>
+			{% endfor %}			
+		  
+	  
+				<div class="alert alert-primary total-price" role="alert">
+					Total : &#8377 {{total.price__sum}}
+				  </div>
+				
+		
+	<form method="POST" action="{% url 'my_order' %}" id="order_form">
+		{% csrf_token %}
+				<div class="row">
+					<div class='col-md-4' style="font-family:Roboto, sans-serif;font-size: 15px;color:#e75b1e;">
+						<b>Delievery Date and Time</b>
+				</div>
+				<div  class='col-md-8'> 
+					<div class="form-group">
+						<div class='input-group date' id='datetimepicker1'>
+							<input type='datetime' class="form-control" name="date_time" id="deldate">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+			
+			
+		</div></div>
+	  </div> 
+	
+	<center>
+	  <input type="submit"class="btn btn-primary btn-lg" id="order" style="background-color:rgb(0, 81, 255);" value="Place Order" > 
+	  
+	</center>
+</form>
+	<br>
+	  </div>
+	  
+	  
+	  </div>
+	  
+	  {% endif %}  	
+  </div>
+
+  <br>
+  
+ 
+  
+
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>  
+  
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(function () {
+			$('#datetimepicker1').datetimepicker({
+				minDate: moment()
+				
+			});
+
+				//$('#datetimepicker1').datetimepicker().on('dp.show', function () {
+                //return $(this).data('DateTimePicker').minDate(new Date());
+    
+     });
+
+
+		
+  		$('.dropdown a.test').on("click", function(e){
+    	$(this).next('ul').toggle();
+    	e.stopPropagation();
+    	e.preventDefault();
+  });
+
+  $(document).on('click', '#order', function(e) {
+    e.preventDefault();
+		Swal.fire({
+  			title: 'Are you sure?',
+  			text: "Proceed to Checkout?",
+  			icon: 'warning',
+  			showCancelButton: true,
+  			confirmButtonColor: '#3085d6',
+  			cancelButtonColor: '#d33',
+  			confirmButtonText: 'Yes, Place Order!'
+		}).then((result) => {
+  		if (result.value) {
+    		$('#order_form').submit();
+		  }
+		});
+  	});
+});
+
+
+        
+
+
+
+
+	</script>
+</div>
+</div>
+{% endblock %}
+

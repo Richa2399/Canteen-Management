@@ -1,0 +1,19 @@
+
+{% extends 'app1/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div id="page-wrapper">
+<div class="container" style="padding-top: 10%;">
+    <div class="row" >
+            <div class="col-md-6" >
+<form method='post'>
+{% csrf_token %}
+{{form|crispy}}
+<input type="submit">
+</form>
+</div>
+</div>
+</div>
+
+{% endblock %}

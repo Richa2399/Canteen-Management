@@ -1,0 +1,25 @@
+
+
+{% extends 'app\base.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="container" style="padding-top:10%">
+   
+    <div class="col my-4">
+ 
+        <h2>Payment status regarding your order Id {{response.ORDERID}}</h2>
+        {% if response.RESPCODE == '01' %}
+        Order Placed Successfully<br>
+        <h3>Amount Paid: {{response.TXNAMOUNT}}<br></hh3>
+        <h3>Transaction id: {{response.TXNID}}</h3>
+        {% else %}
+        Order Failed. Please try again
+        {% endif%}
+ 
+    </div>
+ 
+</div>
+
+{% endblock %}

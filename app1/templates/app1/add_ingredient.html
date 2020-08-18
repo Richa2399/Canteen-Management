@@ -1,0 +1,44 @@
+{% extends 'app1/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div id="page-wrapper">
+			<!-- {{ form }} -->
+
+
+<h><font size="6">Ingredients</font></h>
+<br><br>
+<Form method='post' class="uniForm" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form|crispy }}
+		<input type='submit'>
+	</Form>
+
+
+
+
+    <table class="table table-hover">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">Ingredient Name</th>
+            <th scope="col">Ingredient Quantity</th>
+            <th scope="col">Brand</th>
+            
+            <th scope="col">Action</th>
+            
+          </tr>
+        </thead>
+
+        {% for i in ingredient %}
+        <tr><td>{{i.ingredient_name}}</td> 
+        <td>{{i.ingredient_quantity}}</td> 
+
+        <td>{{i.brand}}</td> 
+        <td>{{i.ingredient_name}}</td> </tr>
+
+        {% endfor %}
+    
+
+</div>
+
+{% endblock %}

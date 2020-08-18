@@ -1,0 +1,66 @@
+{% extends 'app1/base.html' %}
+
+{% block content %}
+
+
+<div id="page-wrapper">
+    <table class="table table-hover">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">Category Name</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Food Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Customer Rating</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Ingredient Details</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data  %}
+          <tr>
+            <td>
+                {{ i.food_categoary }}</td>
+                <td> {{i.food_name}}</td>
+                <td> {{i.description}}</td>
+                <td><img src=" {{i.food_image.url}}" width="80" height="80"></td>
+                <td> {{i.price}}</td>
+                <td> {{i.rating}}</td>
+            <td><a href="{% url 'edit_menu' pk=i.pk %}" class="btn btn-primary a-btn-slide-text">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <span><strong>Edit  </strong></span>            
+            </td>
+            <td>
+            <a href="{% url 'del_menu' pk=i.pk %}" class="btn btn-danger a-btn-slide-text">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                 <span><strong>Delete</strong></span>            
+             </a></td>
+             <td><a href="{% url 'add_ingredient' id=i.pk %}">Ingredient Manage</a></td>
+          </tr>
+            {% endfor %}          
+
+
+</div>
+<script>
+$(document).ready(function(){
+$("#mytable #checkall").click(function () {
+        if ($("#mytable #checkall").is(':checked')) {
+            $("#mytable input[type=checkbox]").each(function () {
+                $(this).prop("checked", true);
+            });
+
+        } else {
+            $("#mytable input[type=checkbox]").each(function () {
+                $(this).prop("checked", false);
+            });
+        }
+    });
+    
+    $("[data-toggle=tooltip]").tooltip();
+});
+
+</script>
+
+{% endblock %}

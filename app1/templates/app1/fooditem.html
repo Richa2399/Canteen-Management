@@ -1,0 +1,21 @@
+{% extends 'app1/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div id="page-wrapper">
+			<!-- {{ form }} -->
+
+
+<h><font size="6">Food Item</font></h>
+<br><br>
+<Form method='post' class="uniForm" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form|crispy }}
+		<input type='submit'>
+	</Form>
+
+
+
+</div>
+
+{% endblock %}

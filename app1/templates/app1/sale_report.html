@@ -1,0 +1,37 @@
+{% extends 'app1/base.html' %}
+
+{% block content %}
+
+
+<div id="page-wrapper">
+    <form method='post'>
+        {% csrf_token %}
+        <label for="bdaymonth">Filter By month and year</label>
+        <input type="month" id="yearmonth" name="yearmonth" required>
+        <input type="submit" class="btn btn-primary">
+      </form>
+
+      <br>
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Total Earning</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in sale_data %}
+          <tr>
+            <td>{{i.ordered_at}}</td>
+            <td>Rs. {{i.sum}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+
+            Total: Rs.  {{sale.total_price__sum}}
+
+    </div>
+
+
+{% endblock %}

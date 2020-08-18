@@ -1,0 +1,55 @@
+{% extends 'app1/base.html' %}
+
+{% block content %}
+
+
+<div id="page-wrapper">
+    <table class="table table-hover">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">Category Name</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data  %}
+          <tr>
+            <td>
+                {{ i.category_name }}</td>
+            <td><a href="{% url 'edit_cat' pk=i.pk %}" class="btn btn-primary a-btn-slide-text">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <span><strong>Edit</strong></span>            
+            </td>
+            <td>
+            <a href="{% url 'del_cat' pk=i.pk %}" class="btn btn-danger a-btn-slide-text">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                 <span><strong>Delete</strong></span>            
+             </a></td>
+            
+          </tr>
+            {% endfor %}          
+
+
+</div>
+<script>
+$(document).ready(function(){
+$("#mytable #checkall").click(function () {
+        if ($("#mytable #checkall").is(':checked')) {
+            $("#mytable input[type=checkbox]").each(function () {
+                $(this).prop("checked", true);
+            });
+
+        } else {
+            $("#mytable input[type=checkbox]").each(function () {
+                $(this).prop("checked", false);
+            });
+        }
+    });
+    
+    $("[data-toggle=tooltip]").tooltip();
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'app1/base.html' %}
+{% load static %}
+{% block content %}
+<div id="page-wrapper">
+
+
+<h1>Order In Process</h1>
+
+<hr>
+<div class="btn-group">
+ 
+  <!-- <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    ActionOrder
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
+  </div> -->
+</div>
+
+
+<div class="row" >
+  <div class="col-md-5" style="border-style: solid;border-color: maroon;text-align: center;font-size:x-large;">
+   <br><b> Customer Details</b>
+    </div>
+    <div class="col-md-7" style="border-style: solid;border-color: maroon;text-align: center;font-size:x-large;">
+     <b> Order Details</b><br><br>
+     
+     
+      <div class="row">
+     <div class="col" style="font-size: large;text-align: left;"> <b>Food Name </b></div>
+               <div class="col" style="font-size: large;text-align: left;"><b>  Quantity</b></div>
+               <div class="col" style="font-size: large;text-align: left;"> <b>Price</b></div>
+               <div class="col" style="font-size: large;text-align: left;"> <b> Delivery Time</b></div>
+               <div class="col" style="font-size: large;text-align: left;"><b> Ordered Time</b></div>
+      </div> 
+
+    </div>
+  {% for i in order %}
+   
+  <div class="col-md-5" style="border-style: solid;border-color: maroon;"><br>
+        <b> Order id: </b> {{i.id}} <br>
+         
+        <b> First Name:</b> {{ i.ordered_by.first_name }} <br>
+        <b> Last Name:</b> {{ i.ordered_by.last_name}}<br>
+        <b> Email address:</b> {{ i.ordered_by.email}}<br>
+        <b> Phone Number:</b> {{ i.ordered_by.phone}}<br>
+        <b> Ordered Time :</b> {{ i.ordered_at}}<br>
+        <b> Delievery  Time :</b> {{ i.time}}<br>
+        <b> Total Price :</b> {{ i.total_price}}<br>
+
+
+        <p align="right"> <a href="{% url 'complete_order' pk=i.pk %}"><button type="button" class="btn btn-success">Complete Order</button></a>
+            <a href="{% url 'cancel_order' pk=i.pk %}"><button type="button" class="btn btn-danger">Cancel Order</button></a></p><br><br>
+
+    </div>
+    
+
+    <div class="col-md-7" style="border-style: solid;border-color: maroon;"><br>
+      
+      
+        {% for j in item %}
+        <div class="row">
+            {% if i.id == j.order_id.id %}
+               
+               <div class="col"> {{ j.menu.food_name }}</div>
+               <div class="col">  {{ j.quant }}</div>
+               <div class="col">  {{ j.menu.price }}</div>
+
+            {% endif %}
+        
+          </div>
+        {% endfor %}
+        
+       
+    </div>
+    <hr>
+    
+    {% endfor %}
+        </div>
+        
+{% endblock %}
+<!-- <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>{{ i.first_name }}</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr> -->

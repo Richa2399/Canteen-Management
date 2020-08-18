@@ -1,0 +1,46 @@
+{% extends 'app\base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+
+<style>
+     #hint_id_username {
+         display: none;
+     }
+
+</style>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+     $(document).ready(function(){
+     		$('#id_phone').attr('readonly', true);
+     		$('#id_email').attr('readonly', true); 
+
+     	});
+
+</script>
+
+
+<div class="container" style="padding-top: 10%">
+    <div class="row" >
+    		<div class="col-md-3" >
+    		</div>
+      
+            <div class="col-md-6" >
+            	<br>
+            	<b><H1> Edit Profile</H1></b>
+
+            <form method="POST">
+
+                  {% csrf_token %}
+                  {{form2|crispy}}
+                  {{form|crispy}}
+                  <button type="submit" class="btn btn-success">Edit Profile</button>
+            </form>
+       
+</div>
+</div>
+</div></div>
+
+<br>
+{% endblock %}

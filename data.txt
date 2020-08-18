@@ -1,0 +1,25 @@
+email: food@gmail.com
+password: food@123
+ph:1000
+
+
+stu:
+no : 2345
+password : 2345
+
+[body][refid]
+
+[body][resultInfo][refundId]{ 
+'body': { ' 'resultInfo': {'resultStatus': 'PENDING', 'resultCode': '601', 'resultMsg': 'Refund request was
+raised for this transaction. But it is pending state'}, 'refundId': '20200319111212801300168306802167324', 'txnId': '20200319111212800110168506601363488', 'refundAmount': '20'}}
+
+
+User:
+1234323432
+1234323432
+
+canteen:
+1234567898
+1234567898
+
+

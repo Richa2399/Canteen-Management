@@ -1,0 +1,27 @@
+{% extends 'app\base.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="container" style="padding-top: 10%;">
+    <div class="row" >
+            <div class="col-md-6" >
+                  <img src="{{ user.profile.url }}" style="height: 300px; width: 300px;">
+
+            </div>
+            <div class="col-md-6">
+             <span style="font-size: larger;font-style: italic;color:darkred;">
+                  <b> Name: {{ user.first_name|capfirst }} {{ user.last_name }}<br>
+              College id: {{data.college_id}}<br>
+              Email: {{ user.email }}</b></span>
+
+
+              
+        </div>
+        <a href="{% url 'user_edit' %}"><button type="button" class="btn btn-success">Edit Profile</button></a>
+        <a href="{% url 'change_password' %}"><button type="button" class="btn btn-warning">Change Password</button></a>
+</div>
+</div>
+
+<br>
+{% endblock %}

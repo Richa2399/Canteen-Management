@@ -1,0 +1,354 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<style>
+
+.rating {
+  display: inline-block;
+  position: relative;
+  height: 30px;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 40%;
+  cursor: pointer;
+}
+
+.rating label:last-child {
+  position: static;
+}
+
+.rating label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+  color:orange;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $(':radio').change(function() {
+        var v = $(this).closest("form").find("input[type='hidden']").val();
+        console.log(v);
+        $.ajax({
+            url:"{% url 'add_rating' %}",
+            data:{
+                'rate':this.value,
+                'food':v
+                
+            },
+            success: function (data) {
+                
+            }
+        })
+  console.log('New star rating: ' + this.value);
+});
+
+
+})
+
+
+
+</script>
+
+<div class="container" style="padding-top: 15%;">
+	<div class="row" >
+		<div class="col-4" >
+{% for i in order %}
+<h1 style="font-size:xx-large;color: darkred;text-align: center;font-family:inherit;"> <b>Your Reciept</b> </h1><br>
+
+<div style="border-style:dashed;border-color: purple; padding:20px;font-size: large;font-family:Verdana, Geneva, Tahoma, sans-serif; color:orangered;">
+   <b><span style="color:darkgreen;"> Order ID: </span></b>  {{i.id}} <br>
+   <b><span style="color:darkgreen;"> Canteen Name:</span> </b> {{i.ordered_to.first_name|title}}<br>
+   <b><span style="color:darkgreen;">Transaction id:</span> </b>{{i.transaction_id}}<br>
+
+
+   {% for j in item %}
+   {% if i == j.order_id %}
+  <b> <span style="color:darkgreen;">Food Item:</span></b> {{j.menu.food_name}}<br>
+       <!-- {{j.menu.price}} -->
+       
+      <b><span style="color:darkgreen;"> Quantity:</span></b> {{j.quant}}<br>
+
+   <b><span style="color:darkgreen;"> Ordered Time:</span></b> {{i.ordered_at}}<br>
+   <b><span style="color:darkgreen;">Serving Time:</span></b> {{i.time}}<br>
+   <b><span style="color:darkgreen;">Canteen Status:</span> </b>{{i.status}}<br>
+   <b><span style="color:darkgreen;">Total Price:</span></b> {{i.total_price}}<br>
+   
+    <!-- <table>
+        <tr> <td> Item Name</td>
+            <td> Price</td><br>
+            <td> Quantity</td><br></tr> -->
+             
+     
+            <td> <b><span style="color:darkgreen;"> Add Rating:</span></b></td></tr>
+
+
+            <td><form class="rating">
+              <label>
+                  <input type="hidden" id="{{j.id}}" value="{{j.id}}">
+                  {% if j.cust_rating == 0 %}
+                <input type="radio" name="stars" value="1" />
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="2" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="3" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>   
+              </label>
+              <label>
+                <input type="radio" name="stars" value="4" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              <label>
+                <input type="radio" name="stars" value="5" />
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+                <span class="icon">★</span>
+              </label>
+              {% endif %}
+              <br>
+
+              
+              {% if j.cust_rating == 1 %}
+              <input type="radio" name="stars" value="1" style="color: orange;"  checked/>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" style="color: orange;" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3" style="color: orange;"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+              {% endif %}
+
+
+              
+              {% if j.cust_rating == 2 %}
+              <input type="radio" name="stars" value="1"  />
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" checked/>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3"   />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+              {% endif %}
+
+              
+              {% if j.cust_rating == 3 %}
+              <input type="radio" name="stars" value="1"/>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3" checked  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+              {% endif %}
+
+
+              {% if j.cust_rating == 4 %}
+              <input type="radio" name="stars" value="1" style="color: orange;" />
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" style="color: orange;" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3" style="color: orange;"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4" checked />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+              {% endif %}
+
+
+              {% if j.cust_rating == 5 %}
+              <input type="radio" name="stars" value="1" style="color: orange;" />
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="2" style="color: orange;" />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="3" style="color: orange;"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>   
+            </label>
+            <label>
+              <input type="radio" name="stars" value="4"  />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+            <label>
+              <input type="radio" name="stars" value="5" checked />
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+              <span class="icon">★</span>
+            </label>
+              {% endif %}
+
+          
+          </form>    </td>
+          </tr>
+          <br>
+          {% endif %}
+          
+          {% endfor %}   
+        
+            
+        </div>
+        <br><br>
+{% endfor %}
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}
